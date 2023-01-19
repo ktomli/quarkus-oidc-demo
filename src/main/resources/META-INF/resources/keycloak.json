@@ -1,0 +1,12 @@
+{
+  "realm": "quarkus",
+  "auth-server-url": "https://keycloak-rhsso.apps.ocp1.casaanderson.home/auth/",
+  "ssl-required": "external",
+  "resource": "backend-service",
+  "verify-token-audience": true,
+  "credentials": {
+    "secret": "secret"
+  },
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}
