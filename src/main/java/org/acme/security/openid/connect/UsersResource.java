@@ -34,11 +34,17 @@ public class UsersResource {
     SecurityIdentity identity;
 
     @GET
+    public Message publicHello() {
+        return new Message("Hello, welcome to the demo. Please log in.");
+    }
+
+    @GET
     @RolesAllowed("user")
     @Path("/me")
     @NoCache
-    public User me() {
-        return new User(identity);
+    public Message me() {
+        User u = new User(identity);
+        return new Message("Hello, " + u.getUserName() + ", you are authorized.");
     }
 
     public static class User {

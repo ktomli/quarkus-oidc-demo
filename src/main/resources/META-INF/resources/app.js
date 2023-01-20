@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 var keycloak = new Keycloak();
-var serviceUrl = 'http://localhost:8080/rh-sso-service-jee-jaxrs'
+var serviceUrl = 'http://localhost:8080/'
 
 function notAuthenticated() {
     document.getElementById('not-authenticated').style.display = 'block';
@@ -35,7 +35,10 @@ function request(endpoint) {
         req.open('GET', serviceUrl + '/' + endpoint, true);
 
         if (keycloak.authenticated) {
+            console.log("Authenticated!");
             req.setRequestHeader('Authorization', 'Bearer ' + keycloak.token);
+        } else {
+            console.log("Unauthenticated request.");
         }
 
         req.onreadystatechange = function () {
