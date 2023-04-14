@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 var keycloak = new Keycloak();
-var serviceUrl = 'http://localhost:8080/'
 var token = '';
 
 function notAuthenticated() {
@@ -33,7 +32,7 @@ function request(endpoint) {
     var req = function() {
         var req = new XMLHttpRequest();
         var output = document.getElementById('message');
-        req.open('GET', serviceUrl + '/' + endpoint, true);
+        req.open('GET', '/' + endpoint, true);
 
         if (keycloak.authenticated) {
             console.log("Authenticated!");
