@@ -16,6 +16,7 @@
  */
 var keycloak = new Keycloak();
 var serviceUrl = 'http://localhost:8080/'
+var token = '';
 
 function notAuthenticated() {
     document.getElementById('not-authenticated').style.display = 'block';
@@ -37,7 +38,8 @@ function request(endpoint) {
         if (keycloak.authenticated) {
             console.log("Authenticated!");
             req.setRequestHeader('Authorization', 'Bearer ' + keycloak.token);
-        } else {
+        } else if(token != "") {
+            req.setRequestHeader('Authorization', 'Bearer ' + token)
             console.log("Unauthenticated request.");
         }
 
@@ -63,16 +65,32 @@ function request(endpoint) {
     }
 }
 
-window.onload = function () {
-    keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(function () {
-        if (keycloak.authenticated) {
-            authenticated();
-        } else {
-            notAuthenticated();
-        }
+keycloak.init({ 
+//     onLoad: 'check-sso',
+// silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+  enableLogging: true }).then(function () {
+    if (keycloak.authenticated) {
+        authenticated();
+        console.log("Token: " + keycloak.token);
+        token = keycloak.token;
+console.log("Authenticated: " + keycloak.authenticated);
 
-        document.body.style.display = 'block';
-    });
-}
+    } else {
+        notAuthenticated();
+    }
 
-keycloak.onAuthLogout = notAuthenticated;
+    document.body.style.display = 'block';
+});
+// window.onload = function () {
+// }
+
+// keycloak.onAuthLogout = notAuthenticated;
+
+// keycloak.init({ onLoad: 'check-sso',
+//  silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+//   enableLogging: true });
+// //   .then(authenticated => {
+// //     alert(authenticated ? 'authenticated' : 'not authenticated');
+// // }).catch(error => alert(error));
+// console.log("Token: " + keycloak.token);
+// console.log("Authenticated: " + keycloak.authenticated);
