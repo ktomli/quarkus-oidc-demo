@@ -37,7 +37,6 @@ public class AdminResource {
 
     @GET
     @RolesAllowed("admin")
-    @Produces(MediaType.TEXT_PLAIN)
     public Message admin() {
         String u = identity.getPrincipal().getName();
         return new Message("Hello, " + u + ", you are granted administrative permission.");
