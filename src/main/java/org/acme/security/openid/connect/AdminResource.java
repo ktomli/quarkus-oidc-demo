@@ -16,12 +16,14 @@
 package org.acme.security.openid.connect;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import io.quarkus.security.Authenticated;
+import io.quarkus.security.identity.SecurityIdentity;
 
 /**
  * @author <a href="mailto:psilva@redhat.com">Pedro Igor</a>
@@ -30,10 +32,14 @@ import io.quarkus.security.Authenticated;
 @Authenticated
 public class AdminResource {
 
+    @Inject
+    SecurityIdentity identity;
+
     @GET
     @RolesAllowed("admin")
     @Produces(MediaType.TEXT_PLAIN)
-    public String admin() {
-        return "granted";
+    public Message admin() {
+        String u = identity.getPrincipal().getName();
+        return new Message("Hello, " + u + ", you are granted administrative permission.");
     }
 }
