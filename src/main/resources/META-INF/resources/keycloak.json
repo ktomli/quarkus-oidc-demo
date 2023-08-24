@@ -1,6 +1,6 @@
 {
   "realm": "quarkus",
-  "auth-server-url": "https://keycloak-rhsso.apps.ocp1.casaanderson.home/auth/",
+  "auth-server-url": "https://sso-user1-keycloak.apps.cluster-zh7nv.zh7nv.sandbox126.opentlc.com/auth/",
   "ssl-required": "external",
   "resource": "backend-service",
   "public-client": true,
